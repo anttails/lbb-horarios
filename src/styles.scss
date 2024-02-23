@@ -1,0 +1,78 @@
+// Fonts
+/*@import "../node_modules/opensans-npm-webfont/style.scss";
+@import "../node_modules/@fontsource/fira-code";
+@import "../node_modules/@fontsource/raleway/400.css";
+@import "../node_modules/@fontsource/raleway/700.css";*/
+@import '@fontsource-variable/fira-code';
+@import '@fontsource-variable/open-sans';
+@import '@fontsource-variable/raleway';
+
+$font-family-sans-serif:      'Open Sans Variable', sans-serif;
+$font-family-monospace:       'Fira Code Variable', monospace;
+$headings-font-family:        'Raleway Variable', sans-serif;
+
+$primary:                   #337ebe;
+$secondary:                 #BE7333;
+
+$link-decoration:             none;
+$link-hover-decoration:       underline;
+
+// Create your own map
+$custom-colors: (
+  "i":                         #891c5e,
+  "ap":                        #0061a4,
+  "ic":                        #4CBB17,
+  "ir":                        #613b7f,
+  "r":                         #bf6423,
+  "u":                         #d9a900,
+  "m":                         #7e0305,
+  "s":                         #5f8c80,
+  "e":                         #b70c14,
+  "o":                         $primary
+  );
+
+  // Required
+  @import "../node_modules/bootstrap/scss/functions";
+  @import "../node_modules/bootstrap/scss/variables";
+  @import "../node_modules/bootstrap/scss/variables-dark";
+
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+/*
+$enable-rounded:              false;
+$offcanvas-vertical-height:   auto;
+*/
+
+/* Importing Bootstrap SCSS file. */
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+.btn-lbb:focus{
+  background-color: $primary!important;
+}
+
+.btn-lbb:hover, .btn-lbb:active, .btn-lbb:focus{
+  color: $white!important;
+}
+
+.btn-lbb {
+  color: $primary!important;
+}
+
+@include media-breakpoint-up(md) {
+  .router-container{
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+ }
+
+ .ngb-dp-weekday{
+  color: $primary!important;
+  font-style: normal!important;
+ }
+
+ .font-sans-serif{
+  font-family: $font-family-sans-serif!important;
+ }
+

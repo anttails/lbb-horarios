@@ -1,0 +1,12 @@
+@if(train && !loading){
+  <div id="header" class="sticky-md-top bg-body-tertiary">
+    <hbb-train-header [train]="train" [loadingRefresh]="loadingRefresh" [start]="start" [end]="end" [types]="types" (callRefresh)="refreshTrain($event)"></hbb-train-header>
+  </div>
+
+  <hbb-train-stop-list [stopList]="train?.timetable" [trainClass]="train?.class" [startDate]="start[0]" [nextDate]="end[0]" [types]="types"></hbb-train-stop-list>
+}@else if(loading){
+  <hbb-loading></hbb-loading>
+}@else if (error) {
+  <hbb-info [messageCode]="errorMessage" [error]="true"></hbb-info>
+}
+

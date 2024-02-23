@@ -1,0 +1,253 @@
+<main class="container-xl wh-100 vw-100">
+  <div class="row align-items-start">
+    <div class="col-12 col-md-6 col-lg-5 py-2 bg-primary-subtle rounded">
+
+      <section class="row align-items-center mb-2 mb-md-3">
+        <div class="col">
+          <span class="d-flex align-items-center h4 mb-0 text-uppercase fw-semibold">
+            <a href="https://linhadabeirabaixa.com" target="_blank"><img src="assets/img/logo.svg"
+                class="img-fluid logo bg-white" alt="LBB" /></a>
+            <a class="ms-2 text-reset align-self-center" [routerLink]="['/']">Horários</a>
+          </span>
+        </div>
+        <div class="col-auto ms-auto">
+          <button type="button" class="btn btn-outline-primary btn-lbb text-primary me-3" placement="bottom"
+            ngbTooltip="{{'messages.location.tooltip' | translate}}" #locationT="ngbTooltip" (click)="getLocation()"
+            [disabled]="locationLoading || !locationSupported" [ngClass]="{'link-dark': !dark, 'link-light': dark}">
+            <fa-icon [icon]="locationDot" [fixedWidth]="true" [spin]="locationLoading" size="lg"></fa-icon>
+          </button>
+          <button type="button" class="btn" (click)="setupTheme()"
+            [ngClass]="{'btn-outline-dark': !dark, 'btn-outline-warning': dark}">
+            <fa-icon [icon]="themeIcon" [fixedWidth]="true" size="lg"></fa-icon>
+          </button>
+        </div>
+      </section>
+
+      <section class="row align-items-center mb-2">
+        <div class="col-12">
+          <div class="list-group">
+            <div class="list-group-item">
+              <label class="h6 fw-semibold">{{'messages.form.searchBy' | translate}}</label>
+              <div class="btn-group d-flex" role="group">
+                <input type="radio" class="btn-check" name="formMode" id="statonOpt" [(ngModel)]="formMode"
+                  [value]="FormMode.Station" #statonOpt autocomplete="off">
+                <label class="btn btn-outline-primary" for="statonOpt"
+                  [ngClass]="{'text-body': !statonOpt.checked, 'text-light': statonOpt.checked}">
+                  {{'messages.form.station' | translate}}
+                </label>
+
+                <input type="radio" class="btn-check" name="formMode" id="trainOpt" [(ngModel)]="formMode"
+                  [value]="FormMode.Train" #trainOpt autocomplete="off">
+                <label class="btn btn-outline-primary" for="trainOpt"
+                  [ngClass]="{'text-body': !trainOpt.checked, 'text-light': trainOpt.checked}">
+                  {{'messages.form.train' | translate}}
+                </label>
+              </div>
+            </div>
+            @if (formMode == FormMode.Station) {
+            <div class="list-group-item">
+              <form name="form" #stationF="ngForm" (ngSubmit)="stationF.form.valid && onStationSubmit()" novalidate>
+                <fieldset [disabled]="stationFormLoading">
+                  <div class="row g-2 mb-3">
+                    <div class="col-12">
+                      <label class="h6 fw-semibold">{{'messages.form.station' | translate}}</label>
+                      <div class="position-relative">
+                        <input required type="text" class="form-control" name="id" #idTA="ngbTypeahead" #id="ngModel"
+                          placeholder="{{('messages.' +  (!stationFormLoading ? 'form.typeAhead.placeholder' : 'common.loading')) | translate }}" [editable]="false"
+                          [selectOnExact]="true"
+                          [class.is-invalid]="!stationFormLoading && (searchStationFailed || (!searchingStation && !idTA.isPopupOpen() && id.dirty && id.errors))"
+                          [(ngModel)]="stationForm.id" [ngbTypeahead]="searchStationTypeAhead"
+                          [resultTemplate]="stationResultTemplate" [inputFormatter]="searchStationFormatter" />
+                        @if (searchingStation || (stationFormLoading && !stationForm.id)) {
+                        <div class="position-absolute top-50 end-0 translate-middle-y me-2">
+                          <fa-icon [fixedWidth]="true" [icon]="faSpinner" [pulse]="true"></fa-icon>
+                        </div>
+                        }
+                      </div>
+                      @if (!searchStationFailed) {
+                      <div class="invalid-feedback">
+                        {{'messages.form.typeAhead.searchFailed' | translate}}
+                      </div>
+                      }
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col">
+                      <label class="h6 fw-semibold">{{'messages.form.date' | translate}}</label>
+                      <input class="form-control" name="date" [(ngModel)]="stationForm.date" required ngbDatepicker
+                        #dateS="ngModel" [class.is-invalid]="dateS.dirty && dateS.errors" #dS="ngbDatepicker"
+                        [footerTemplate]="dSFooterTemplate" (click)="dS.toggle()" />
+                    </div>
+                    <div class="col d-flex flex-column justify-content-between">
+                      <label class="h6 fw-semibold">{{'messages.form.hourGap' | translate}}</label>
+                      <div class="d-flex mb-2 align-items-center">
+                        <small
+                          [innerHTML]="'messages.form.betweenHours' | translate: {start: stationForm.start, end: stationForm.end}"
+                          [ngClass]="{'text-danger' :  (stationForm.start >= stationForm.end)}">
+                        </small>
+
+                        <button class="btn btn-sm btn-link p-0 me-auto ms-2" type="button"
+                          [disabled]="hourToggle && (stationForm.start >= stationForm.end)" [ngClass]="{ 'link-primary': !hourToggle,
+                          'link-danger': hourToggle && (stationForm.start >= stationForm.end),
+                          'link-success': hourToggle && (stationForm.start < stationForm.end)
+                      }" (click)="hourToggle = !hourToggle">
+                          <fa-icon
+                            [icon]="hourToggle ? ((stationForm.start < stationForm.end) ? faCheck : faWarning) : faEdit"></fa-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  @if(hourToggle){
+                  <div class="row mb-3">
+                    <div class="col-6">
+                      <label class="h6 mb-0 fw-semibold">{{'messages.form.hourStart' | translate}}</label>
+                      <ngb-timepicker [(ngModel)]="stationForm.start" size="small" name="start" required
+                        #startS="ngModel" />
+                    </div>
+                    <div class="col-6">
+                      <label class="h6 mb-0 fw-semibold">{{'messages.form.hourEnd' | translate}}</label>
+                      <ngb-timepicker [(ngModel)]="stationForm.end" size="small" name="end" required #endS="ngModel" />
+                    </div>
+                  </div>
+                  }
+                  <div class="row g-2 mb-3">
+                    <div class="col">
+                      <label class="h6 fw-semibold">{{'messages.form.trainType' | translate}}
+                      </label>
+                      <button class="btn btn-sm btn-link p-0 mb-1 ms-2" type="button"
+                        [disabled]="stationForm.types < MIN_TYPES || stationForm.types > MAX_TYPES" [ngClass]="{ 'link-primary': !typeToggle,
+                        'link-danger': (stationForm.types < MIN_TYPES || stationForm.types > MAX_TYPES),
+                        'link-success': typeToggle && (stationForm.types >= MIN_TYPES && stationForm.types <= MAX_TYPES),
+                        'd-md-none': (stationForm.types >= MIN_TYPES && stationForm.types <= MAX_TYPES)
+                    }" (click)="typeToggle = !typeToggle">
+                        <fa-icon
+                          [icon]="(stationForm.types < MIN_TYPES || stationForm.types > MAX_TYPES) ? faWarning : ( typeToggle ? faCheck : faEdit)"></fa-icon>
+                      </button>
+                      <div class="d-md-block" [ngClass]="{'d-none': !typeToggle, 'd-block': typeToggle}">
+                        @for (type of trainTypes; track trainTypes[idx]; let idx = $index) {
+                        <div class="form-check form-switch" [ngClass]="{'mt-2': idx % 3 == 0}">
+                          <input class="form-check-input" type="checkbox" id="type-{{type}}"
+                            [checked]="stationForm.types | trainTypeCheck: idx" (change)="changeTypeStatus(idx,$event)">
+                          <label class="form-check-label" for="type-{{type}}">{{'messages.form.types.' + type |
+                            translate}}</label>
+                        </div>
+                        }
+                      </div>
+                      @if (stationForm.types < MIN_TYPES) { <div class="invalid-feedback d-block">
+                        {{'messages.form.typeRequired' | translate}}
+                    </div>
+                    }
+                  </div>
+
+                  <div class="col-auto me-auto align-self-end">
+                    {{stationF.errors}}
+                    <button type="submit" class="btn btn-primary text-white"
+                      [disabled]="!stationF.valid || !stationForm.id  || !stationForm.start || !stationForm.end || (stationForm.start >= stationForm.end)">
+                      <fa-icon [fixedWidth]="true" [icon]="stationFormLoading ? faSpinner : faSearch"
+                        [pulse]="stationFormLoading"></fa-icon>
+                      <span class="d-none d-lg-inline">
+                        {{'messages.form.search' | translate}}
+                      </span>
+                    </button>
+                  </div>
+            </div>
+            </fieldset>
+            </form>
+          </div>
+
+          <ng-template #dSFooterTemplate>
+            <hr class="my-0" />
+            <button class="btn btn-primary text-white btn-sm m-2 float-start"
+              (click)="stationForm.date = getToday(); dS.close()">{{'messages.datePicker.today' | translate}}</button>
+            <button class="btn btn-link btn-sm m-2 float-end" (click)="dS.close()">{{'messages.datePicker.close' |
+              translate}}</button>
+          </ng-template>
+          }
+          @if (formMode == FormMode.Train) {
+          <div class="list-group-item">
+            <form name="form" #trainF="ngForm" (ngSubmit)="trainF.form.valid && onTrainSubmit()" novalidate>
+              <fieldset class="row g-2" [disabled]="trainFormLoading">
+                <div class="col">
+                  <label class="h6 fw-semibold">{{'messages.form.number' | translate}}</label>
+                  <input type="number" class="form-control" name="number" [(ngModel)]="trainForm.number" required
+                    min="1" max="99999" #number="ngModel" [ngClass]="{ 'is-invalid': number.dirty && number.errors }" />
+                </div>
+
+                <div class="col">
+                  <label class="h6 fw-semibold">{{'messages.form.date' | translate}}</label>
+                  <input class="form-control" name="date" [(ngModel)]="trainForm.date" required ngbDatepicker
+                    #dateT="ngModel" [class.is-invalid]="dateT.dirty && dateT.errors" #dT="ngbDatepicker"
+                    [footerTemplate]="dTFooterTemplate" (click)="dT.toggle()" />
+                </div>
+
+                <div class="col-auto me-auto align-self-end">
+                  {{trainF.errors}}
+                  <button type="submit" class="btn btn-primary text-white" [disabled]="!trainF.valid">
+                    <fa-icon [fixedWidth]="true" [icon]="trainFormLoading ? faSpinner : faSearch"
+                      [pulse]="trainFormLoading"></fa-icon>
+                    <span class="d-none d-lg-inline">
+                      {{'messages.form.search' | translate}}
+                    </span>
+                  </button>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+
+          <ng-template #dTFooterTemplate>
+            <hr class="my-0" />
+            <button class="btn btn-primary text-white btn-sm m-2 float-start"
+              (click)="trainForm.date = getToday(); dT.close()">{{'messages.datePicker.today' | translate}}</button>
+            <button class="btn btn-link btn-sm m-2 float-end" (click)="dT.close()">{{'messages.datePicker.close' |
+              translate}}</button>
+          </ng-template>
+          }
+        </div>
+    </div>
+    </section>
+    <footer class="d-none d-md-inline small">
+      <span class="small" [innerHTML]="'footer' | translate"></span>
+    </footer>
+
+
+  </div>
+
+  <div class="col-12 col-md-6 col-lg-7 pb-3 pt-0 router-container">
+    <router-outlet />
+  </div>
+
+  </div>
+</main>
+<footer class="d-md-none small text-center px-2 pb-4">
+  <span class="small" [innerHTML]="'footer' | translate"></span>
+</footer>
+
+<ng-template #stationResultTemplate let-r="result" let-t="term">
+  <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+  <small class="d-block">{{r.nameRoute}}</small>
+</ng-template>
+
+
+<ng-template #locationModal let-modal>
+  <div class="modal-header">
+    @if(!locationError && locationList && locationList.length){
+      <h4 class="modal-title">{{'messages.location.selectAStation' | translate}}</h4>
+    }
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body" ngbAutofocus>
+    <div [ngClass]="{'list-group' : !locationError && locationList && locationList.length, 'text-center': locationError || (locationList && !locationList.length)}">
+      @if(!locationError){
+        @for(item of locationList; track item.id) {
+        <button type="button" class="list-group-item list-group-item-action" (click)="selectStationGeo(item)">
+          {{item.name}}
+        </button>
+        } @empty {
+          {{'error.location.noStations' | translate}}
+        }
+      }@else {
+        {{'error.location.' + (locationCode ? locationCode : 'error') | translate}}
+      }
+    </div>
+  </div>
+</ng-template>

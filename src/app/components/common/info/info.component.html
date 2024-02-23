@@ -1,0 +1,6 @@
+<div class="d-flex flex-column justify-content-center align-items-center" [ngClass]="{'py-2 py-md-5': !error, 'py-5': error}">
+  @if(error){
+    <fa-icon class="text-danger" size="4x" [fixedWidth]="true" [icon]="faIconExclamation"></fa-icon>
+  }
+  <span class="d-block mt-2 fs-4 text-center text-muted" [innerHTML]="'error.' + messageCode | translate"></span>
+</div>

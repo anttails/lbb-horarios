@@ -1,0 +1,84 @@
+@if((showPassed && (train.passedHour || train.passedIP)) || (!train.passedHour && !train.passedIP)){
+  <div class="list-group my-3 border border-{{(train.passedHour || train.passedIP) ? 'muted' : train.class}}" [ngClass]="{ 'border-opacity-25': train.status && train.status.type == cancelledTrain}">
+    <div class="list-group-item border-0">
+      <div class="row align-items-start">
+        <div class="col-auto pe-1 pe-sm-3 text-center text-uppercase">
+            <small class="d-block text-{{(train.passedHour || train.passedIP) ? 'muted' : train.class}}">{{ 'messages.station.trainDetail.' + (train.departure ? 'departs' : 'arrives') | translate }}</small>
+            <span class="d-block fs-4 font-monospace" [ngClass]="{ 'text-muted': train.status && train.status.type == cancelledTrain}">
+              @if (newHour) {
+                {{ newHour }}
+              } @else {
+                {{ train.hour }}
+              }
+            </span>
+            @if (newHour) {
+              <small class="d-block font-monospace text-muted text-decoration-line-through">
+                {{ train.hour }}
+              </small>
+            }
+        </div>
+        <div class="col">
+          <small class="d-block text-uppercase text-{{(train.passedHour || train.passedIP) ? 'muted' : train.class}}">{{ 'messages.station.trainDetail.destination' | translate }}</small>
+          <span class="d-block fs-5" [ngClass]="{ 'text-muted': train.status && train.status.type == cancelledTrain}">
+            <a class="text-reset" [routerLink]="['/station']" [queryParams]="{ id: train.destinationIP, types: types}">{{train.destination}}</a>
+          </span>
+        </div>
+        @if(train.platform){
+          <div class="col-auto ms-auto text-uppercase text-center">
+            <small class="d-block text-{{train.class}}">{{ 'messages.station.trainDetail.platform' | translate }}</small>
+            <span class="font-monospace text-muted fs-5">{{ train.platform }}</span>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="list-group-item py-1 border-0 border-top small {{listStatusClass}}">
+      <div class="row align-items-center">
+        <div class="col">
+          <hbb-train-status-info [status]="train.status" [updatedDateTime]="train.updatedDateTime" class="d-block d-sm-inline-block me-1"></hbb-train-status-info>
+          <small class="d-block d-sm-inline-block">
+            <span class="text-muted">{{ 'messages.station.trainDetail.origin' | translate }} </span>
+            <a class="text-reset" [routerLink]="['/station']" [queryParams]="{ id: train.originIP, date: train.dateStart, types: types}"><b>{{train.origin}}</b></a>.
+          </small>
+        </div>
+        @if(!train.status || train.status && train.status.type != cancelledTrain){
+          <div class="col-auto ms-auto">
+            <span class="link-primary" (click)="refreshTrainStatus()" role="button">
+              <fa-icon [icon]="refreshIcon" [fixedWidth]="true" [spin]="loadingRefresh"></fa-icon>
+            </span>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="list-group-item border-0 border-top">
+      <div class="row align-items-center">
+        <div class="col">
+          <span class="small my-1 me-2">
+            <span class="d-inline-block  bg-{{train.class}} bg-opacity-10 py-0 me-1 rounded">
+              <span class="bg-{{train.class}} bg-opacity-75 text-white py-0 px-1 rounded"><a class="text-decoration-none text-reset" [routerLink]="['/train']" [queryParams]="{ number: train.number1, date: train.dateStart}">{{train.type}}</a></span>
+              <span class="px-1"><a class="text-reset" [routerLink]="['/train']" [queryParams]="{ number: train.number1, date: train.dateStart}">{{ train.number1}}</a><small class="text-muted">@if(train.number2){/{{train.number2}}}</small></span>
+            </span>
+            <small class="d-inline-block">{{ train.company }}</small>
+          </span>
+        </div>
+        <div class="col-auto ms-auto">
+          <span class="d-inline-block py-1 link-primary" (click)="getTrainDetail()" role="button">
+            <span class="text-dark">{{ 'messages.station.trainDetail.route' | translate }}</span>
+            <fa-icon [icon]="(showTrainDetail ? upArrowIcon: downArrowIcon)" [fixedWidth]="true" class="ms-1 text-primary"></fa-icon>
+          </span>
+        </div>
+      </div>
+    </div>
+    @if(showTrainDetail){
+      <div class="list-group-item border-0 pt-0 px-2">
+        @if(loading){
+        <div class="d-flex align-items-center pb-1 justify-content-center">
+          <div class="spinner-grow spinner-grow-sm text-{{train.class}} me-1" role="status"></div>
+          <small>{{'messages.common.loading' | translate}}</small>
+        </div>
+      } @else {
+          <hbb-train-stop-list [small]="true" [stopList]="trainDetail" [trainClass]="train.class"  [startDate]="train.dateStart" [nextDate]="nextDate" [types]="types" [currentStationId]="currentStationId"></hbb-train-stop-list>
+        }
+      </div>
+    }
+  </div>
+}

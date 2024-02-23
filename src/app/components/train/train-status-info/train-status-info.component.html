@@ -1,0 +1,24 @@
+@if(status){
+  <span class="d-block d-sm-inline-block me-1">
+
+    <fa-icon [icon]="statusIcon" class="me-1" [fixedWidth]="true"></fa-icon>
+
+    @switch (status.type) {
+      @case (trainStatusEnum.Delayed) {
+        <span [innerHTML]="'messages.train.status.delay'
+        | translate: {delay: status.delay, s: (status.delay > 1 ? 's': '')}"></span>
+      }
+      @case (trainStatusEnum.StationInfo) {
+        <span [innerHTML]="'messages.train.status.stationInfo'
+        | translate: {min: status.minutes, s: (status.minutes > 1 ? 's': ''), time: status.time}"></span>
+      }
+      @default {
+        <span [innerHTML]="'messages.train.status.' + message | translate"></span>
+      }
+    }
+  </span>
+}
+@if(updatedDateTime){
+  <small class="d-block d-sm-inline-block"  [innerHTML]="'messages.train.status.updated' | translate: {datetime: updatedDateTime}">
+  </small>
+}

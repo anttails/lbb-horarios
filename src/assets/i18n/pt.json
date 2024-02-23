@@ -1,0 +1,106 @@
+{
+    "messages": {
+      "common": {
+        "loading":         "A obter informação..."
+      },
+      "datePicker": {
+        "close":           "Fechar",
+        "today":           "Hoje"
+      },
+      "form": {
+        "date" :           "Data",
+        "betweenHours":    "<b>{{start}}</b> até <b>{{end}}</b>.",
+        "hourEnd":         "e",
+        "hourGap":         "Intervalo horário",
+        "hourStart":       "Entre",
+        "name" :           "Nome",
+        "number" :         "Número",
+        "search":          "Pesquisar",
+        "searchBy":        "Pesquisa por",
+        "station":         "Estação",
+        "train":           "Comboio",
+        "trainType":       "Filtrar tipo de comboio",
+        "typeAhead":  {
+          "placeholder":   "Escreva 2 ou mais letras para pesquisar...",
+          "searchFailed":  "Ocorreu um erro a obter os resultados. Por favor, tente mais tarde."
+        },
+        "types": {
+          "i":             "Internacional",
+          "a":             "Alfa Pendular",
+          "ic":            "Intercidades",
+          "ir":            "Interregional",
+          "r":             "Regional",
+          "u":             "Urbano / Suburbano",
+          "e":             "Especial",
+          "m":             "Mercadorias",
+          "s":             "Serviço"
+        },
+        "typeRequired":    "Tem de escolher pelo menos 1 tipo de comboio..."
+      },
+      "location": {
+          "message":       "para obter uma lista dos próximos comboios para o dia de hoje.",
+          "selectAStation":"Seleccione uma estação",
+          "tooltip":       "Pesquisa rápida por localização"
+      },
+      "station": {
+        "hidden":         " (<b>{{number}} </b>oculto{{s}})",
+        "results":         "<b>{{number}} </b>resultado{{s}}",
+        "showPassed":      "Mostrar <b>{{number}} </b>comboio{{s}} com hora de passagem ultrapassada",
+        "trainDetail":{
+          "arrives":       "Chega às",
+          "departs":       "Parte às",
+          "destination":   "Destino",
+          "origin":        "Procede de ",
+          "platform":      "Linha",
+          "route":         "Trajecto"
+        },
+        "updated":         "Actualizado a <b>{{datetime}}</b>."
+      },
+      "train": {
+        "header": {
+          "route": {
+            "and":         " e ",
+            "end":         ".",
+            "invalid":     "Informação indisponível entre ",
+            "start":       "Comboio de <b>{{date}}</b>, entre "
+          }
+        },
+        "listing": {
+          "platform":      "Linha"
+        },
+        "status": {
+          "cancelled":     "Comboio <b>suprimido</b>.",
+          "delay":         "Atraso previsto de <b>{{delay}} minuto{{s}}</b>.",
+          "done":          "Circulação <b>realizada</b>.",
+          "noProblem":     "Circula <b>à tabela</b>. <span class=\"d-inline-block text-muted small\">Sem anomalias detectadas.</span>",
+          "programmed":    "Circulação <b>programada</b>.",
+          "stationInfo":   "Chega <b>{{min}} minuto{{s}}</b> antes, às <b>{{time}}</b>.",
+          "toDepart":      "Comboio <b>por partir</b>.",
+          "updated":       "Actualizado a <b>{{datetime}}</b>."
+        }
+      }
+    },
+
+
+    "error": {
+      "HBB_PLATFORMNODATA":     "Não foi possível obter dados sobre as plataformas de embarque.",
+      "HBB_INVALIDTRAINDATA":   "Dados de comboio inválidos no sistema da Infraestruturas de Portugal.",
+      "HBB_NONEXISTENTTRAIN":   "O comboio não foi encontrado no sistema da Infraestruturas de Portugal.",
+      "HBB_INVALIDSTATIONDATA": "Dados de estação inválidos no sistema da Infraestruturas de Portugal.",
+      "HBB_STATIONNODATA":      "Estação sem dados no sistema da Infraestruturas de Portugal.<br><small>Experimente mudar os critérios de pesquisa.</small>",
+      "error":                  "Occorreu um erro. Por favor, tente mais tarde.",
+      "noTrains":               "Sem comboios.<br><small>Experimente mudar os critérios de pesquisa.</small>",
+      "location": {
+          "HBB_INVALIDCOORD":   "Coordenadas inválidas.",
+          "notSupported":       "Este navegador não suporta localização.",
+          "noStations":         "Encontra-se a mais de 50km de uma estação.",
+          "timeout":            "Dados de localização não obtidos. Por favor, use a pesquisa ou tente mais tarde.",
+          "unavailable":        "Localização indisponível.",
+          "userDenied":         "Este dispositivo actualmente não permite acesso à sua localização.",
+          "error":              "Occorreu um erro. Por favor, tente mais tarde."
+      }
+    },
+
+    "footer": "Página desenvolvida por <b><a href=\"https://anteropires.com\" target=\"_blank\">Antero Pires</a></b>.<br>Dados obtidos através da ferramenta de pesquisa da <b><a href=\"https://servicos.infraestruturasdeportugal.pt/pt-pt/horarios\" target=\"_blank\">Infraestruturas de Portugal</a></b>. A informação apresentada pode não reflectir as condições de circulação em tempo real.<br><b><a href=\"https://linhadabeirabaixa.com\" target=\"_blank\">linhadabeirabaixa.com</a></b>"
+
+}

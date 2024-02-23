@@ -1,0 +1,48 @@
+@if(station && !loading){
+<div id="header" class="sticky-md-top bg-body-tertiary mt-3 mt-md-0">
+  <div class="row align-items-center pt-1 pt-md-2 mb-2 mb-md-3">
+    <div class="col-12 col-md-auto text-center h3 mt-1 mb-0 fw-semibold">
+      <span class="d-inline-block bg-body p-1 px-2 rounded">
+        {{station.stationName}}
+      </span>
+    </div>
+    <div class="col-12 col-md-auto ms-auto text-center text-md-end"></div>
+  </div>
+  <div class="row small text-muted pb-2 mb-2 border-bottom border-muted">
+    <div class="col-12 col-md-auto text-center">
+      @if(station.trainList.length){
+        <small [innerHTML]="'messages.station.results' | translate: {number: station.trainList.length, s: (station.trainList.length != 1 ? 's': '')}">
+        </small>
+        @if(passedTrains > 0 && !showPassed){
+          <small [innerHTML]="'messages.station.hidden' | translate: {number: passedTrains, s: (passedTrains != 1 ? 's': '')}">
+          </small>
+        }.
+      }
+    </div>
+    <div class="col-12 col-md-auto ms-auto text-center small">
+      <small [innerHTML]="'messages.station.updated' | translate: {datetime: station.updatedDateTime}">
+      </small>
+    </div>
+  </div>
+</div>
+
+@if(passedTrains > 0 && !showPassed){
+<div class="row g-1 align-items-center">
+  <div class="col-auto mx-auto text-center small" (click)="showPassed = !showPassed" role="button">
+    <small class="link-primary" [innerHTML]="'messages.station.showPassed' | translate: {number: passedTrains, s: (passedTrains != 1 ? 's': '')}">
+    </small>
+  </div>
+</div>
+}
+
+@for (train of station.trainList; track train.dateStart + '_' + train.number1 + '_' + station.updatedDateTime) {
+<hbb-station-train-info [showPassed]="showPassed" [train]="train" [types]="types" [currentStationId]="station.stationIP"></hbb-station-train-info>
+} @empty {
+  <hbb-info messageCode="noTrains"></hbb-info>
+}
+}@else if(loading){
+
+<hbb-loading></hbb-loading>
+}@else if (error) {
+  <hbb-info [messageCode]="errorMessage" [error]="true"></hbb-info>
+}

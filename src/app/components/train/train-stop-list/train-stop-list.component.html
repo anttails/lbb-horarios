@@ -1,0 +1,41 @@
+
+<div class="list-group">
+@for (stop of stopList; track stop.hour; let even = $even) {
+  <div class="list-group-item py-0 border-bottom border-{{trainClass}}" [ngClass]="{'text-muted bg-bg-body-secondary border-opacity-50': stop.trainPassed, 'bg-light-subtle': even && !stop.trainPassed }">
+    <div class="row align-items-center" [ngClass]="{'fw-semibold': currentStationId && currentStationId == stop.stationId }">
+      <div class="col-auto text-center font-monospace py-2">
+        <span class="d-block" [ngClass]="{'fs-5': !small, 'fs-6': small}">
+          @if (stop.newHour) {
+            {{ stop.newHour }}
+          } @else {
+            {{ stop.hour }}
+          }
+        </span>
+        @if (stop.newHour) {
+          <small class="d-block text-muted text-decoration-line-through">
+            {{ stop.hour }}
+          </small>
+        }
+      </div>
+      <div class="col ps-3 py-2">
+        <span class="d-block" [ngClass]="{'fs-5': !small, 'fs-6': small}">
+          <a class="text-reset" [routerLink]="['/station']" [queryParams]="{ id: stop.stationId, date: stop.nextDay ? nextDate : startDate, types: types}">{{stop.stationName}}</a>
+        </span>
+        @if (stop.remarks) {
+          <small class="d-block text-muted">
+            <fa-icon [icon]="faInfoCircle" [fixedWidth]="true"></fa-icon>
+            {{ stop.remarks }}
+          </small>
+        }
+      </div>
+      @if (stop.platform && !stop.trainPassed) {
+        <div class="col-auto ms-auto text-uppercase text-center py-2 ps-1" [ngClass]="{ 'small': small }">
+          <small class="d-block text-{{trainClass}}" [ngClass]="{ 'fw-normal': currentStationId && currentStationId == stop.stationId }">{{ 'messages.train.listing.platform' | translate }}</small>
+          <span class="font-monospace text-muted" [ngClass]="{'fs-5': !small, 'fs-6': small}">{{ stop.platform }}</span>
+
+        </div>
+      }
+    </div>
+  </div>
+} @empty {}
+</div>

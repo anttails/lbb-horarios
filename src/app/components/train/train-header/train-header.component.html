@@ -1,0 +1,93 @@
+    @if(train){
+    <div class="row align-items-center pt-2 pb-2 bg-body-tertiary">
+      <div class="col-12 col-md-auto text-center h3 mt-1 fw-semibold">
+          <span class="d-inline-block  bg-{{train.class}} bg-opacity-10 py-1 pe-1 rounded">
+            <span class="bg-{{train.class}} bg-opacity-75 text-white p-1 px-2 me-1 rounded">{{train.type}}</span>
+            <span class="px-1 font-sans-serif">{{ train.number}}</span>
+          </span>
+      </div>
+      <div class="col-12 col-md-auto ms-auto text-center text-md-end">{{train.company}}</div>
+    </div>
+    <div class="list-group mb-3 border border-{{train.class}}" [ngClass]="{ 'border-opacity-25': train.status && train.status.type == trainStatusEnum.Cancelled}">
+      <div class="list-group-item border-0 text-center small">
+        <span class="d-inline-block me-1" [innerHTML]="'messages.train.header.route.start' | translate: {date: startDate}"></span>
+        <span class="d-inline-block">
+          <a class="text-reset" [routerLink]="['/station']" [queryParams]="{ id: train.originIP, date: startDate, types: types}">
+            <b>{{ train.origin }}</b>
+          </a>
+          {{ 'messages.train.header.route.and' | translate }}
+          <a class="text-reset" [routerLink]="['/station']" [queryParams]="{ id: train.destinationIP, date: endDate, types: types}">
+            <b>{{ train.destination }}</b>
+          </a>{{ 'messages.train.header.route.end' | translate }}
+        </span>
+      </div>
+      <div class="list-group-item border-0 border-top">
+        <div class="row align-items-start">
+          <div class="col-auto font-monospace">
+            <span class="fs-4 d-block">{{ startHour }}</span>
+          </div>
+          <div class="col">
+            <hr class="border border-{{ train.class }} border-2 opacity-100">
+          </div>
+          <div class="col-auto px-0 pt-1 text-center">
+            <span class="d-block" [ngClass]="{'text-muted text-decoration-line-through': train.status && train.status.type == trainStatusEnum.Cancelled}">
+              {{tripDurationPlusDelay}}</span>
+            @if (tripDuration) {
+              <span class="small d-block text-muted text-decoration-line-through">{{ tripDuration }}</span>
+            }
+          </div>
+          <div class="col">
+            <hr class="border border-{{ train.class }} border-2 opacity-100">
+          </div>
+          <div class="col-auto text-end font-monospace">
+            <span class="fs-4 d-block" [ngClass]="{'text-muted text-decoration-line-through': train.status && train.status.type == trainStatusEnum.Cancelled}">{{ endHourPlusDelay }}</span>
+            @if (endHour) {
+              <span class="small d-block text-muted text-decoration-line-through">{{ endHour }}</span>
+            }
+          </div>
+        </div>
+        @if (train && train.inconsistency > 0) {
+          <div class="row small text-danger text-center">
+            <div class="col">
+              @if (train.inconsistency == 1 || train.inconsistency > 2) {
+                <span class="d-inline-block me-1">{{ 'messages.train.header.route.invalid' | translate }}</span>
+                <span class="d-inline-block">
+                  <a class="text-reset" [routerLink]="['/station']" [queryParams]="{ id: train.originIP, date: startDate, types: types}">
+                    <b>{{ train.origin }}</b>
+                  </a>
+                  {{ 'messages.train.header.route.and' | translate }}
+                  <a class="text-reset" [routerLink]="['/station']" [queryParams]="{ id: train.timetable[0].stationId, date: train.timetable[0].nextDay ? startDate : endDate, types: types}">
+                    <b>{{ train.timetable[0].stationName }}</b>
+                  </a>{{ 'messages.train.header.route.end' | translate }}
+                </span>
+              }
+              @if (train.inconsistency > 1) {
+                <span class="d-inline-block me-1">{{ 'messages.train.header.route.invalid' | translate }}</span>
+                <span class="d-inline-block">
+                  <a class="text-reset" [routerLink]="['/station']" [queryParams]="{ id: train.timetable[train.timetable.length - 1].stationId, date: train.timetable[train.timetable.length - 1].nextDay ? startDate : endDate, types: types}">
+                    <b>{{ train.timetable[train.timetable.length - 1].stationName }}</b>
+                  </a>
+                  {{ 'messages.train.header.route.and' | translate }}
+                  <a class="text-reset" [routerLink]="['/station']" [queryParams]="{ id: train.destinationIP, date: endDate, types: types}">
+                    <b>{{ train.destination }}</b>
+                  </a>{{ 'messages.train.header.route.end' | translate }}
+                </span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+      <div class="list-group-item border-0 border-top {{listStatusClass}}">
+        <div class="row align-items-center">
+          <div class="col">
+            <hbb-train-status-info [status]="train.status" [updatedDateTime]="train.updatedDateTime"></hbb-train-status-info>
+          </div>
+          <div class="col-auto ms-auto">
+            <span class="link-primary" (click)="refreshTrainStatus()" role="button">
+              <fa-icon [icon]="refreshIcon" [fixedWidth]="true" [spin]="loadingRefresh"></fa-icon>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
