@@ -6,6 +6,7 @@ import { HttpClient, HttpClientModule, provideHttpClient, withFetch, withInterce
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { errorInterceptor } from './interceptors/error.interceptor';
+import { provideMatomo, withRouter } from 'ngx-matomo-client';
 
 // In order to make ngx-translate to work with
 // Android 17 according to
@@ -27,6 +28,13 @@ export const provideTranslation = () => ({
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideMatomo(
+      {
+        trackerUrl: 'https://stats.anteropires.com',
+        siteId: 1
+      },
+      withRouter()
+    ),
     provideHttpClient(
       withFetch(),
       withInterceptors([errorInterceptor])
