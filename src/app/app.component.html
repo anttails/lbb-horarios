@@ -110,7 +110,7 @@
                     </div>
                   </div>
                   }
-                  <div class="row g-2 mb-3">
+                  <div class="row g-2">
                     <div class="col">
                       <label class="h6 fw-semibold">{{'messages.form.trainType' | translate}}
                       </label>
@@ -124,8 +124,8 @@
                           [icon]="(stationForm.types < MIN_TYPES || stationForm.types > MAX_TYPES) ? faWarning : ( typeToggle ? faCheck : faEdit)"></fa-icon>
                       </button>
                       <div class="d-md-block" [ngClass]="{'d-none': !typeToggle, 'd-block': typeToggle}">
-                        @for (type of trainTypes; track trainTypes[idx]; let idx = $index) {
-                        <div class="form-check form-switch" [ngClass]="{'mt-2': idx % 3 == 0}">
+                        @for (type of trainTypes; track trainTypes[idx]; let idx = $index; let first = $first) {
+                        <div class="form-check form-switch" [ngClass]="{'mt-2': idx % 3 == 0 && !first}">
                           <input class="form-check-input" type="checkbox" id="type-{{type}}"
                             [checked]="stationForm.types | trainTypeCheck: idx" (change)="changeTypeStatus(idx,$event)">
                           <label class="form-check-label" for="type-{{type}}">{{'messages.form.types.' + type |
