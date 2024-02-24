@@ -181,10 +181,10 @@ export class StationViewComponent {
     this.reloadListener.unsubscribe();
   }
 
-  goToTomorrow(){
-    const tomorrow = moment(this.date, this.commonFunctionsService.MOMENT_DATE_YMD_FORMAT).add(1, 'day').format(this.commonFunctionsService.MOMENT_DATE_DMY_FORMAT);
+  goToNextDay(){
+    const nextDay = moment(this.date, this.commonFunctionsService.MOMENT_DATE_YMD_FORMAT).add(1, 'day').format(this.commonFunctionsService.MOMENT_DATE_DMY_FORMAT);
     this.router.navigate(['/station'], {
-      queryParams: { id: this.id, date: tomorrow, start: null, end: null, types: this.types },
+      queryParams: { id: this.id, date: nextDay, start: null, end: null, types: this.types },
     });
   }
 

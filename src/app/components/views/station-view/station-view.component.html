@@ -45,9 +45,9 @@
 }
 @if(end >= '23:00' && station && station.trainList && station.trainList.length - passedTrains >= 0 && station.trainList.length - passedTrains < 3){
   <div class="row g-1 align-items-center my-4">
-    <div class="col-auto mx-auto text-center small" (click)="goToTomorrow()" role="button">
+    <div class="col-auto mx-auto text-center small" (click)="goToNextDay()" role="button">
       <small class="link-primary">
-        {{'messages.station.tomorrow' | translate }}
+        {{'messages.station.nextDay' | translate }}
       </small>
     </div>
   </div>

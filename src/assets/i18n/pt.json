@@ -44,10 +44,10 @@
       },
       "station": {
         "hidden":          " (<b>{{number}} </b>oculto{{s}})",
+        "nextDay":         "Ver dia seguinte",
         "range":           "A <b>{{date}} </b>entre <b>{{start}}</b> e <b>{{end}}</b>.",
         "results":         "<b>{{number}} </b>resultado{{s}}",
         "showPassed":      "Mostrar <b>{{number}} </b>comboio{{s}} com hora de passagem ultrapassada",
-        "tomorrow":        "Ver amanhã",
         "trainDetail":{
           "arrives":       "Chega às",
           "departs":       "Parte às",
