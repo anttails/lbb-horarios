@@ -6,7 +6,10 @@
         {{station.stationName}}
       </span>
     </div>
-    <div class="col-12 col-md-auto ms-auto text-center text-md-end"></div>
+    <div class="col-12 col-md-auto ms-auto text-center text-md-end small">
+      <span class="d-md-none"  [innerHTML]="'messages.station.range' | translate: { date: dateDisplay, start: start, end: end }">
+      </span>
+    </div>
   </div>
   <div class="row small text-muted pb-2 mb-2 border-bottom border-muted">
     <div class="col-12 col-md-auto text-center">
@@ -39,6 +42,15 @@
 <hbb-station-train-info [showPassed]="showPassed" [train]="train" [types]="types" [currentStationId]="station.stationIP"></hbb-station-train-info>
 } @empty {
   <hbb-info messageCode="noTrains"></hbb-info>
+}
+@if(end >= '23:00' && station && station.trainList && station.trainList.length - passedTrains >= 0 && station.trainList.length - passedTrains < 3){
+  <div class="row g-1 align-items-center my-4">
+    <div class="col-auto mx-auto text-center small" (click)="goToTomorrow()" role="button">
+      <small class="link-primary">
+        {{'messages.station.tomorrow' | translate }}
+      </small>
+    </div>
+  </div>
 }
 }@else if(loading){
 

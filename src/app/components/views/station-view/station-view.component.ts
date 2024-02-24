@@ -48,10 +48,12 @@ export class StationViewComponent {
 
   private id!: number;
   private date!: string;
-  private start!: string;
-  private end!: string;
+  protected start!: string;
+  protected end!: string;
   protected types!: number;
   private forceReload = false;
+
+  protected dateDisplay!: string;
 
   protected error = false;
   protected errorMessage!: string;
@@ -138,6 +140,7 @@ export class StationViewComponent {
             queryParams: { id: id, types: types },
           });
         }
+        this.dateDisplay = this.commonFunctionsService.convertDateDMY(date);
 
         // Remove Hours if invalid!
         if(!startOk || !endOk){
@@ -176,6 +179,13 @@ export class StationViewComponent {
 
   ngOnDestroy(): void {
     this.reloadListener.unsubscribe();
+  }
+
+  goToTomorrow(){
+    const tomorrow = moment(this.date, this.commonFunctionsService.MOMENT_DATE_YMD_FORMAT).add(1, 'day').format(this.commonFunctionsService.MOMENT_DATE_DMY_FORMAT);
+    this.router.navigate(['/station'], {
+      queryParams: { id: this.id, date: tomorrow, start: null, end: null, types: this.types },
+    });
   }
 
   private getStationListing(
