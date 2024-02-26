@@ -1,0 +1,112 @@
+{
+    "messages": {
+      "common": {
+        "loading":         "Getting information..."
+      },
+      "datePicker": {
+        "close":           "Close",
+        "today":           "Today"
+      },
+      "form": {
+        "betweenHours":    "<b>{{start}}</b> until <b>{{end}}</b>.",
+        "date" :           "Date",
+        "edit" :           "Edit",
+        "hourEnd":         "and",
+        "hourGap":         "Hour interval",
+        "hourStart":       "Between",
+        "invalidHourGap":  "Invalid interval",
+        "name" :           "Name",
+        "number" :         "Number",
+        "ok":              "Close",
+        "search":          "Search",
+        "searchBy":        "Search by",
+        "station":         "Station",
+        "train":           "Train",
+        "trainType":       "Filter train type",
+        "typeAhead":  {
+          "placeholder":   "Type 2 or more letters to search...",
+          "searchFailed":  "An error ocurred while trying to fetch results. Please try again later."
+        },
+        "types": {
+          "i":             "International",
+          "a":             "Alfa Pendular",
+          "ic":            "Intercidades",
+          "ir":            "Interregional",
+          "r":             "Regional",
+          "u":             "Urban / Suburban",
+          "e":             "Special",
+          "m":             "Freight",
+          "s":             "Service"
+        },
+        "typeRequired":    "You have to choose at least 1 type...",
+        "updateStatus":    "Update status"
+      },
+      "location": {
+          "message":       "in order to obtain a list of the next trains for today.",
+          "selectAStation":"Select a station",
+          "tooltip":       "Quick search by location"
+      },
+      "station": {
+        "hidden":          " (<b>{{number}} </b>hidden)",
+        "nextDay":         "See next day",
+        "range":           "On <b>{{date}} </b>between <b>{{start}}</b> and <b>{{end}}</b>.",
+        "results":         "<b>{{number}} </b>result{{s}}",
+        "showPassed":      "Show <b>{{number}} </b> past train{{s}}.",
+        "trainDetail":{
+          "arrives":       "Arrives at",
+          "departs":       "Departs at",
+          "destination":   "Destination",
+          "origin":        "Comes from ",
+          "platform":      "Platform",
+          "route":         "Route"
+        },
+        "updated":         "Updated at <b>{{datetime}}</b>."
+      },
+      "train": {
+        "header": {
+          "route": {
+            "and":         " and ",
+            "end":         ".",
+            "invalid":     "No available information between ",
+            "start":       "Train of <b>{{date}}</b>, between "
+          }
+        },
+        "listing": {
+          "platform":      "Platform"
+        },
+        "status": {
+          "cancelled":     "Train <b>cancelled</b>.",
+          "delay":         "Expected delay of <b>{{delay}} minute{{s}}</b>.",
+          "done":          "Run <b>complete</b>.",
+          "noProblem":     "Runs <b>on time</b>. <span class=\"d-inline-block text-muted small\">No problem detected.</span>",
+          "programmed":    "Run is <b>scheduled</b>.",
+          "stationInfo":   "Arrives <b>{{min}} minute{{s}}</b> earlier, at <b>{{time}}</b>.",
+          "toDepart":      "Train <b>to depart</b>.",
+          "updated":       "Updated at <b>{{datetime}}</b>."
+        }
+      }
+    },
+
+
+    "error": {
+      "HBB_PLATFORMNODATA":     "Cannot get boarding platform data.",
+      "HBB_INVALIDTRAINDATA":   "Train data invalid at Infraestruturas de Portugal's system.",
+      "HBB_NONEXISTENTTRAIN":   "Train not found at Infraestruturas de Portugal's system.",
+      "HBB_INVALIDSTATIONDATA": "Invalid station data at Infraestruturas de Portugal's system.",
+      "HBB_STATIONNODATA":      "Station without data at Infraestruturas de Portugal's system.<br><small>Try to modify your search criteria.</small>",
+      "error":                  "An error has occurred. Please, try again later.",
+      "noTrains":               "No trains found.<br><small>Try to modify your search criteria.</small>",
+      "location": {
+          "HBB_INVALIDCOORD":   "Invalid coordinates.",
+          "notSupported":       "This browser doesn't support location.",
+          "noStations":         "You're more than 50km away from the nearest station.",
+          "timeout":            "Couldn't get location data on time. Please, use the search form or try again later.",
+          "unavailable":        "Location unavailable.",
+          "userDenied":         "This device currently doesn't allow access to your location.",
+          "error":              "An error has occurred. Please, try again later."
+      }
+    },
+
+    "footer": "Site developed by <b><a href=\"https://anteropires.com\" target=\"_blank\">Antero Pires</a></b>.<br>Data obtained via the search tool of <b><a href=\"https://servicos.infraestruturasdeportugal.pt/pt-pt/horarios\" target=\"_blank\">Infraestruturas de Portugal</a></b>. The displayed information may not reflect real time running conditions.<br><b><a href=\"https://linhadabeirabaixa.com\" target=\"_blank\">linhadabeirabaixa.com</a></b>"
+
+}
