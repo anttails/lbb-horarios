@@ -1,3 +1,5 @@
 export const environment = {
-  cdnURL: 'http://localhost:3000'
+  cdnURL: 'http://localhost:3000',
+  trackerUrl: '',
+  siteId: ''
 };
