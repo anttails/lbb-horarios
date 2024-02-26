@@ -54,7 +54,7 @@
         "showPassed":      "Show <b>{{number}} </b> past train{{s}}.",
         "trainDetail":{
           "arrives":       "Arrives at",
-          "departs":       "Departs at",
+          "departs":       "Leaves at",
           "destination":   "Destination",
           "origin":        "Comes from ",
           "platform":      "Platform",

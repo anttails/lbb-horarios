@@ -219,8 +219,20 @@
 <ng-container *ngTemplateOutlet="footer; context:{class: 'd-md-none small text-center px-2 pb-4'}"></ng-container>
 
 <ng-template #footer let-class="class">
-  <footer class="{{class}}">
-    <span class="small" [innerHTML]="'footer' | translate"></span>
+  <footer class="row m-0 g-0 {{class}}">
+    <div class="col-12 small" [innerHTML]="'footer' | translate"></div>
+    <div class="col-12 text-center">
+      <div class="btn-group" role="group">
+      @for (lang of langs; track $index) {
+          <input type="radio" class="btn-check" name="langMode" id="{{lang}}" [(ngModel)]="currentLang"
+            [value]="lang" autocomplete="off" [disabled]="this.currentLang == lang">
+          <label class="btn  btn-sm btn-link link-primary fw-semibold" for="statonOpt" (click)="setupLanguage(lang)"
+            [ngClass]="{'text-reset': this.currentLang == lang}">
+            {{'messages.languages.' + lang | translate}}
+          </label>
+        }
+      </div>
+    </div>
   </footer>
 </ng-template>
 

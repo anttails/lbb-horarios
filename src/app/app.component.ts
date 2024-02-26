@@ -53,7 +53,7 @@ import {
 import { StationTrainInfoComponent } from './components/station/station-train-info/station-train-info.component';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { TrainViewComponent } from './components/views/train-view/train-view.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   CustomAdapter,
   CustomDateParserFormatter,
@@ -104,6 +104,10 @@ export class AppComponent implements OnInit, OnDestroy {
   protected faWarning = faCircleExclamation;
   protected formMode!: FormMode;
   readonly FormMode = FormMode;
+
+  // Lang
+  protected currentLang = this.translate.getDefaultLang();
+  protected langs: string[] = ['pt', 'en'];
 
   // Geolocation
   @ViewChild('locationModal') locationModal!: TemplateRef<any>;
@@ -205,8 +209,10 @@ export class AppComponent implements OnInit, OnDestroy {
     private commonEventsService: CommonEventsService,
     private commonFunctionsService: CommonFunctionsService,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private translate:  TranslateService
   ) {
+
     this.commonEventsService.stationLoaded.subscribe((item) => {
       //if(item.stationData){
         this.stationForm.id = item.stationData;
@@ -218,6 +224,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.trainFormLoading = !item.loaded;
     });
 
+    this.setupLanguage();
     this.setupTheme(false);
   }
 
@@ -272,6 +279,32 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   // * Common
+  setupLanguage(code?: string): void {
+
+    // First, let's get the user override.
+    if(!code){
+      const pref = localStorage.getItem('lang');
+
+      // If it's valid, that takes priority
+      if(pref && pref.length == 2){
+        this.currentLang = pref.toLowerCase();
+      } else {
+        // Invalid? What's the browser default?
+        const browserDefault = this.translate.getBrowserLang();
+        // If valid, set
+        if(browserDefault && browserDefault.length == 2 && this.translate.getLangs()?.includes(browserDefault)){
+          this.currentLang = browserDefault;
+        }
+      }
+
+    } else if (code.length == 2) {
+      this.currentLang = code;
+      localStorage.setItem('lang', code.toLowerCase());
+    }
+
+    this.translate.use(this.currentLang);
+  }
+
   setupTheme(toggle = true): void {
 
     // First, let's get the user override. Default value is light,

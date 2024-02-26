@@ -40,6 +40,10 @@
         },
         "typeRequired":    "Tem de escolher pelo menos 1 tipo de comboio..."
       },
+      "languages": {
+          "pt":            "Português",
+          "en":            "English"
+      },
       "location": {
           "message":       "para obter uma lista dos próximos comboios para o dia de hoje.",
           "selectAStation":"Seleccione uma estação",
