@@ -1,10 +1,10 @@
 @if((showPassed && (train.passedHour || train.passedIP)) || (!train.passedHour && !train.passedIP)){
-  <div class="list-group my-3 border border-{{(train.passedHour || train.passedIP) ? 'muted' : train.class}}" [ngClass]="{ 'border-opacity-25': train.status && train.status.type == cancelledTrain}">
+  <div class="list-group my-3 border border-{{(train.passedHour || train.passedIP) ? 'muted' : train.class}}" [ngClass]="{ 'border-opacity-25': train.status && train.status.type == TrainStatus.Cancelled}">
     <div class="list-group-item border-0">
       <div class="row align-items-start">
         <div class="col-auto pe-1 pe-sm-3 text-center text-uppercase">
             <small class="d-block text-{{(train.passedHour || train.passedIP) ? 'muted' : train.class}}">{{ 'messages.station.trainDetail.' + (train.departure ? 'departs' : 'arrives') | translate }}</small>
-            <span class="d-block fs-4 font-monospace" [ngClass]="{ 'text-muted': train.status && train.status.type == cancelledTrain}">
+            <span class="d-block fs-4 font-monospace" [ngClass]="{ 'text-muted': train.status && train.status.type == TrainStatus.Cancelled}">
               @if (newHour) {
                 {{ newHour }}
               } @else {
@@ -19,7 +19,7 @@
         </div>
         <div class="col">
           <small class="d-block text-uppercase text-{{(train.passedHour || train.passedIP) ? 'muted' : train.class}}">{{ 'messages.station.trainDetail.destination' | translate }}</small>
-          <span class="d-block fs-5" [ngClass]="{ 'text-muted': train.status && train.status.type == cancelledTrain}">
+          <span class="d-block fs-5" [ngClass]="{ 'text-muted': train.status && train.status.type == TrainStatus.Cancelled}">
             <a class="text-reset" [routerLink]="['/station']" [queryParams]="{ id: train.destinationIP, types: types}">{{train.destination}}</a>
           </span>
         </div>
@@ -40,7 +40,7 @@
             <a class="text-reset" [routerLink]="['/station']" [queryParams]="{ id: train.originIP, date: train.dateStart, types: types}"><b>{{train.origin}}</b></a>.
           </small>
         </div>
-        @if(!train.status || train.status && train.status.type != cancelledTrain){
+        @if(!train.status || train.status && (train.status.type != TrainStatus.Cancelled && train.status.type != TrainStatus.Done)){
           <div class="col-auto ms-auto">
             <span class="link-primary" (click)="refreshTrainStatus()" role="button">
               <fa-icon [icon]="refreshIcon" [fixedWidth]="true" [spin]="loadingRefresh"></fa-icon>

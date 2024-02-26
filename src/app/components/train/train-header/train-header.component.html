@@ -82,11 +82,13 @@
           <div class="col">
             <hbb-train-status-info [status]="train.status" [updatedDateTime]="train.updatedDateTime"></hbb-train-status-info>
           </div>
-          <div class="col-auto ms-auto">
-            <span class="link-primary" (click)="refreshTrainStatus()" role="button">
-              <fa-icon [icon]="refreshIcon" [fixedWidth]="true" [spin]="loadingRefresh"></fa-icon>
-            </span>
-          </div>
+          @if(!train.status || train.status && (train.status.type != trainStatusEnum.Cancelled && train.status.type != trainStatusEnum.Done)){
+            <div class="col-auto ms-auto">
+              <span class="link-primary" (click)="refreshTrainStatus()" role="button">
+                <fa-icon [icon]="refreshIcon" [fixedWidth]="true" [spin]="loadingRefresh"></fa-icon>
+              </span>
+            </div>
+          }
         </div>
       </div>
     </div>

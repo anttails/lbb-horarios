@@ -51,7 +51,7 @@ export class StationTrainInfoComponent implements OnInit {
   protected refreshIcon = faRefresh;
   protected upArrowIcon = faChevronUp;
 
-  protected cancelledTrain = TrainStatus.Cancelled;
+  protected TrainStatus = TrainStatus;
 
   protected nextDate!: string;
   protected newHour: string | undefined;
