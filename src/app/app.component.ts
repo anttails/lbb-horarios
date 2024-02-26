@@ -292,7 +292,7 @@ export class AppComponent implements OnInit, OnDestroy {
         // Invalid? What's the browser default?
         const browserDefault = this.translate.getBrowserLang();
         // If valid, set
-        if(browserDefault && browserDefault.length == 2 && this.translate.getLangs()?.includes(browserDefault)){
+        if(browserDefault && browserDefault.length == 2 && this.langs.includes(browserDefault)){
           this.currentLang = browserDefault;
         }
       }
