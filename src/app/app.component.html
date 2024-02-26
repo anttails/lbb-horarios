@@ -205,9 +205,7 @@
         </div>
     </div>
     </section>
-    <footer class="d-none d-md-inline small">
-      <span class="small" [innerHTML]="'footer' | translate"></span>
-    </footer>
+    <ng-container *ngTemplateOutlet="footer; context:{class: 'd-none d-md-inline small'}"></ng-container>
 
 
   </div>
@@ -218,9 +216,14 @@
 
   </div>
 </main>
-<footer class="d-md-none small text-center px-2 pb-4">
-  <span class="small" [innerHTML]="'footer' | translate"></span>
-</footer>
+<ng-container *ngTemplateOutlet="footer; context:{class: 'd-md-none small text-center px-2 pb-4'}"></ng-container>
+
+<ng-template #footer let-class="class">
+  <footer class="{{class}}">
+    <span class="small" [innerHTML]="'footer' | translate"></span>
+  </footer>
+</ng-template>
+
 
 <ng-template #stationResultTemplate let-r="result" let-t="term">
   <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
