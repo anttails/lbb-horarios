@@ -28,21 +28,21 @@
           <div class="list-group">
             <div class="list-group-item">
               <label class="h6 fw-semibold">{{'messages.form.searchBy' | translate}}</label>
-              <div class="btn-group d-flex" role="group">
-                <input type="radio" class="btn-check" name="formMode" id="statonOpt" [(ngModel)]="formMode"
-                  [value]="FormMode.Station" #statonOpt autocomplete="off">
-                <label class="btn btn-outline-primary" for="statonOpt"
-                  [ngClass]="{'text-body': !statonOpt.checked, 'text-light': statonOpt.checked}">
-                  {{'messages.form.station' | translate}}
-                </label>
+                <div class="btn-group d-flex" role="group">
+                  <input type="radio" class="btn-check" name="formMode" id="statonOpt" [(ngModel)]="formMode"
+                    [value]="FormMode.Station" autocomplete="off">
+                  <label class="btn btn-outline-primary" for="statonOpt"
+                    [ngClass]="{'text-body': FormMode.Station != formMode, 'text-light': FormMode.Station == formMode}">
+                    {{'messages.form.station' | translate}}
+                  </label>
 
-                <input type="radio" class="btn-check" name="formMode" id="trainOpt" [(ngModel)]="formMode"
-                  [value]="FormMode.Train" #trainOpt autocomplete="off">
-                <label class="btn btn-outline-primary" for="trainOpt"
-                  [ngClass]="{'text-body': !trainOpt.checked, 'text-light': trainOpt.checked}">
-                  {{'messages.form.train' | translate}}
-                </label>
-              </div>
+                  <input type="radio" class="btn-check" name="formMode" id="trainOpt" [(ngModel)]="formMode"
+                    [value]="FormMode.Train" autocomplete="off">
+                  <label class="btn btn-outline-primary" for="trainOpt"
+                    [ngClass]="{'text-body': FormMode.Train != formMode, 'text-light': FormMode.Train == formMode}">
+                    {{'messages.form.train' | translate}}
+                  </label>
+                </div>
             </div>
             @if (formMode == FormMode.Station) {
             <div class="list-group-item">
@@ -226,8 +226,8 @@
       @for (lang of langs; track $index) {
           <input type="radio" class="btn-check" name="langMode" id="{{lang}}" [(ngModel)]="currentLang"
             [value]="lang" autocomplete="off" [disabled]="this.currentLang == lang">
-          <label class="btn  btn-sm btn-link link-primary fw-semibold" for="statonOpt" (click)="setupLanguage(lang)"
-            [ngClass]="{'text-reset': this.currentLang == lang}">
+          <label class="btn  btn-sm btn-link fw-semibold" for="langMode" (click)="setupLanguage(lang)"
+            [ngClass]="{'text-reset': this.currentLang != lang, 'text-primary': this.currentLang == lang} ">
             {{'messages.languages.' + lang | translate}}
           </label>
         }
