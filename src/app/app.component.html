@@ -14,7 +14,7 @@
           <button type="button" class="btn btn-outline-primary btn-lbb text-primary me-3" placement="bottom"
             ngbTooltip="{{'messages.location.tooltip' | translate}}" #locationT="ngbTooltip" (click)="getLocation()"
             [disabled]="locationLoading || !locationSupported" [ngClass]="{'link-dark': !dark, 'link-light': dark}">
-            <fa-icon [icon]="locationDot" [fixedWidth]="true" [spin]="locationLoading" size="lg"></fa-icon>
+            <fa-icon [icon]="locationDot" [fixedWidth]="true" [animation]="locationLoading ? 'fade' : undefined" size="lg"></fa-icon>
           </button>
           <button type="button" class="btn" (click)="setupTheme()"
             [ngClass]="{'btn-outline-dark': !dark, 'btn-outline-warning': dark}">
