@@ -7,7 +7,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { errorInterceptor } from './interceptors/error.interceptor';
 import { provideMatomo, withRouter } from 'ngx-matomo-client';
-import { environment } from '../environments/environment.development';
+import { environment } from '../environments/environment';
 
 // In order to make ngx-translate to work with
 // Android 17 according to
