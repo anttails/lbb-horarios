@@ -355,12 +355,17 @@ export class AppComponent implements OnInit, OnDestroy {
               next: (value) => {
                 this.locationError = false;
                 if (value.length) {
-                  this.locationList = value;
-                  this.modalService.open(this.locationModal, {
-                    backdrop: 'static',
-                    centered: true,
-                    scrollable: true
-                  });
+                  // Only 1 station? No need to select.
+                  if(value.length === 1){
+                    this.selectStationGeo(value[0]);
+                  } else {
+                    this.locationList = value;
+                    this.modalService.open(this.locationModal, {
+                      backdrop: 'static',
+                      centered: true,
+                      scrollable: true
+                    });
+                  }
                 } else {
                   this.modalService.open(this.locationModal, { centered: true });
                 }
