@@ -18,6 +18,7 @@
         "name" :           "Name",
         "number" :         "Number",
         "ok":              "Close",
+        "refreshStatus":   "Refresh status",
         "search":          "Search",
         "searchBy":        "Search by",
         "station":         "Station",

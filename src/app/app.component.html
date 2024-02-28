@@ -15,6 +15,7 @@
             ngbTooltip="{{'messages.location.tooltip' | translate}}" #locationT="ngbTooltip" (click)="getLocation()"
             [disabled]="locationLoading || !locationSupported" [ngClass]="{'link-dark': !dark, 'link-light': dark}">
             <fa-icon [icon]="locationDot" [fixedWidth]="true" [animation]="locationLoading ? 'fade' : undefined" size="lg"></fa-icon>
+            <span class="visually-hidden">{{ 'messages.location.tooltip' | translate }}</span>
           </button>
           <button type="button" class="btn" (click)="setupTheme()"
             [ngClass]="{'btn-outline-dark': !dark, 'btn-outline-warning': dark}">
@@ -93,6 +94,7 @@
                       }" (click)="hourToggle = !hourToggle">
                           <fa-icon
                             [icon]="hourToggle ? ((stationForm.start < stationForm.end) ? faCheck : faWarning) : faEdit"></fa-icon>
+                            <span class="visually-hidden">{{ 'messages.form.' + (!hourToggle ? 'edit' : (stationForm.start >= stationForm.end) ? 'invalidHourGap' : 'ok') | translate }}</span>
                         </button>
                       </div>
                     </div>
@@ -122,6 +124,7 @@
                     }" (click)="typeToggle = !typeToggle">
                         <fa-icon
                           [icon]="(stationForm.types < MIN_TYPES || stationForm.types > MAX_TYPES) ? faWarning : ( typeToggle ? faCheck : faEdit)"></fa-icon>
+                        <span class="visually-hidden">{{ 'messages.form.' + (!typeToggle ? 'edit' : (stationForm.types < MIN_TYPES || stationForm.types > MAX_TYPES) ? 'typeRequired' : 'ok') | translate }}</span>
                       </button>
                       <div class="d-md-block" [ngClass]="{'d-none': !typeToggle, 'd-block': typeToggle}">
                         @for (type of trainTypes; track trainTypes[idx]; let idx = $index; let first = $first) {

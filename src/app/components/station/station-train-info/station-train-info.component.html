@@ -44,6 +44,7 @@
           <div class="col-auto ms-auto">
             <span class="link-primary" (click)="refreshTrainStatus()" role="button">
               <fa-icon [icon]="refreshIcon" [fixedWidth]="true" [spin]="loadingRefresh"></fa-icon>
+              <span class="visually-hidden">{{ 'messages.form.refreshStatus' | translate }}</span>
             </span>
           </div>
         }
@@ -65,6 +66,7 @@
             <span class="text-body">{{ 'messages.station.trainDetail.route' | translate }}</span>
             <fa-icon [icon]="(showTrainDetail ? upArrowIcon: downArrowIcon)" [fixedWidth]="true" class="ms-1 text-primary"></fa-icon>
           </span>
+          <button class="visually-hidden-focusable" (click)="getTrainDetail()">{{ 'messages.station.trainDetail.route' | translate }}</button>
         </div>
       </div>
     </div>

@@ -18,6 +18,7 @@
         "name" :           "Nome",
         "number" :         "Número",
         "ok":              "Fechar",
+        "refreshStatus":   "Actualizar estado",
         "search":          "Pesquisar",
         "searchBy":        "Pesquisa por",
         "station":         "Estação",
