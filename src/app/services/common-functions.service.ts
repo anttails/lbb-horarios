@@ -20,7 +20,7 @@ export class CommonFunctionsService {
   public REGEXP_NUMBER: RegExp = /^[0-9]+$/;
   public REGEXP_HOURS: RegExp = /^(?:[01][0-9]|2[0-3]):[0-5][0-9]$/;
   public REGEXP_TRAIN_NUMBER: RegExp = /^(?:[1-9]\d{0,4}|99999)$/;
-  public REGEXP_TRAIN_TYPES: RegExp = /^(?:[1-9]|[1-9][0-9]|[1-4][0-9]{2}|5(?:[0-9]{2}|1[0-1]))$/;
+  public REGEXP_TRAIN_TYPES: RegExp = /(^(?:[1-9]|[1-9][0-9]|[1-4]{1}[0-9]{2}|50{1}[0-9]{1}|51{1}[0-1])$)/;
   public REGEXP_YMD: RegExp = /^\d{4}-\d{2}-\d{2}$/;
 
   public HOURS_MAX = '23:59';
