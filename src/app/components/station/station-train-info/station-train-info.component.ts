@@ -44,6 +44,7 @@ export class StationTrainInfoComponent implements OnInit {
   @Input() showPassed = false;
   @Input() train!: any;
   @Input() types!: number;
+  @Input() compact = false;
 
   protected trainDetail!: any;
 
@@ -60,6 +61,9 @@ export class StationTrainInfoComponent implements OnInit {
   protected loading = false;
   protected loadingRefresh = false;
   protected showTrainDetail = false;
+
+  protected path = '/station';
+  protected target = '_self';
 
   constructor(
     private cdnService: CdnService,
@@ -133,6 +137,10 @@ export class StationTrainInfoComponent implements OnInit {
   }
 
   private setupDetails() {
+    if(this.compact){
+      this.target = '_blank';
+    }
+
     this.newHour = undefined;
      // Status fixes
       if (this.train.status) {

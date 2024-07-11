@@ -1,1 +1,16 @@
 <router-outlet />
+<nav class="navbar fixed-bottom bg-light border-top border-primary">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-auto order-2 order-md-1">
+        <span class="d-flex align-items-center h6 my-1">
+          <a href="https://linhadabeirabaixa.com" target="_blank"><img src="assets/img/logo.svg"
+              class="img-fluid logo bg-white" alt="LBB" /></a>
+          <a class="ms-2 text-reset align-self-center text-uppercase fw-semibold" href="https://horarios.linhadabeirabaixa.com/" target="_blank">Horários</a>
+        </span>
+      </div>
+      <div class="col small order-1 order-md-2 col-12 col-md small text-center text-md-start" [innerHTML]="'footerCompact' | translate"></div>
+    </div>
+
+  </div>
+</nav>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
@@ -12,10 +12,12 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './train-stop-list.component.html',
   styleUrl: './train-stop-list.component.scss'
 })
-export class TrainStopListComponent{
+export class TrainStopListComponent implements OnInit{
 
   protected faInfoCircle = faInfoCircle;
+  protected target = '_self';
 
+  @Input() compact: boolean = false;
   @Input() small: boolean = false;
 
   @Input() currentStationId! :string;
@@ -26,5 +28,11 @@ export class TrainStopListComponent{
   @Input() stopList :any = [];
 
   @Input() types!: number;
+
+  ngOnInit(): void {
+    if(this.compact){
+      this.target = '_blank';
+    }
+  }
 
 }

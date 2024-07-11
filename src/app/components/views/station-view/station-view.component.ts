@@ -5,23 +5,26 @@ import { filter, map } from 'rxjs';
 import { CdnService } from '../../../services/cdn.service';
 import { CommonFunctionsService } from '../../../services/common-functions.service';
 import { StationTrainInfoComponent } from '../../station/station-train-info/station-train-info.component';
-import { CommonFormWrapper } from '../../../models/form-models';
+import { CommonFormWrapper, StationForm } from '../../../models/form-models';
 import { CommonEventsService } from '../../../services/common-events.service';
 import { LoadingComponent } from '../../common/loading/loading.component';
 import { TranslateModule } from '@ngx-translate/core';
 import moment from 'moment';
 import { HttpErrorResponse } from '@angular/common/http';
 import { InfoComponent } from '../../common/info/info.component';
+import { faRefresh } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'hbb-station-view',
   standalone: true,
   imports: [
     CommonModule,
+    FontAwesomeModule,
     InfoComponent,
     LoadingComponent,
     StationTrainInfoComponent,
-    TranslateModule,
+    TranslateModule
   ],
   templateUrl: './station-view.component.html',
   styleUrl: './station-view.component.scss',
@@ -45,6 +48,8 @@ export class StationViewComponent {
         );
       }
     });
+  protected compact = false;
+  protected path = '/station';
 
   private id!: number;
   private date!: string;
@@ -63,6 +68,8 @@ export class StationViewComponent {
   protected passedTrains = 0;
   protected showPassed = false;
 
+  protected refreshIcon = faRefresh;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private cdnService: CdnService,
@@ -73,6 +80,12 @@ export class StationViewComponent {
   ) {}
 
   ngOnInit(): void {
+
+    if(this.activatedRoute.snapshot.data['compact']){
+      this.compact = true;
+      this.path = '/compact';
+    }
+
     let id;
     let date;
     let start;
@@ -120,8 +133,10 @@ export class StationViewComponent {
       // Check for valid types. If valid, convert to int. If not, get default / user saved
       if (types && this.commonFunctionsService.REGEXP_TRAIN_TYPES.test(types)) {
         types = parseInt(types);
-      } else {
+      } else if(!this.compact){
         types = this.commonFunctionsService.getDefaultOrUserTypes();
+      } else {
+        types = StationForm.DEFAULT_TYPES;
       }
 
       // We'll need an id at least!
@@ -136,7 +151,7 @@ export class StationViewComponent {
           date = moment().format(
             this.commonFunctionsService.MOMENT_DATE_YMD_FORMAT
           );
-          this.router.navigate(['/station'], {
+          this.router.navigate([this.path], {
             queryParams: { id: id, types: types },
           });
         }
@@ -144,7 +159,7 @@ export class StationViewComponent {
 
         // Remove Hours if invalid!
         if(!startOk || !endOk){
-          this.router.navigate(['/station'], {
+          this.router.navigate([this.path], {
             queryParams: { id: id, date: date, start: null, end: null, types: types },
           });
         }
@@ -172,7 +187,7 @@ export class StationViewComponent {
         this.commonEventService.emitStationLoadedEvent(
           new CommonFormWrapper(true)
         );
-        this.router.navigate(['/station']);
+        this.router.navigate([this.path]);
       }
     });
   }
@@ -183,8 +198,16 @@ export class StationViewComponent {
 
   goToNextDay(){
     const nextDay = moment(this.date, this.commonFunctionsService.MOMENT_DATE_YMD_FORMAT).add(1, 'day').format(this.commonFunctionsService.MOMENT_DATE_DMY_FORMAT);
-    this.router.navigate(['/station'], {
-      queryParams: { id: this.id, date: nextDay, start: null, end: null, types: this.types },
+    this.refresh(nextDay);
+  }
+
+  refreshData(){
+    this.refresh(this.date);
+  }
+
+  private refresh(day:string){
+    this.router.navigate([this.path], {
+      queryParams: { id: this.id, date: day, start: null, end: null, types: this.types },
     });
   }
 

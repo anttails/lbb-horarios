@@ -20,7 +20,7 @@
         <div class="col">
           <small class="d-block text-uppercase text-{{(train.passedHour || train.passedIP) ? 'muted' : train.class}}">{{ 'messages.station.trainDetail.destination' | translate }}</small>
           <span class="d-block fs-5" [ngClass]="{ 'text-muted': train.status && train.status.type == TrainStatus.Cancelled}">
-            <a class="text-reset" [routerLink]="['/station']" [queryParams]="{ id: train.destinationIP, types: types}">{{train.destination}}</a>
+            <a class="text-reset" [routerLink]="[path]" [queryParams]="{ id: train.destinationIP, types: types}" [target]="target">{{train.destination}}</a>
           </span>
         </div>
         @if(train.platform){
@@ -37,7 +37,7 @@
           <hbb-train-status-info [status]="train.status" [updatedDateTime]="train.updatedDateTime" class="d-block d-sm-inline-block me-1"></hbb-train-status-info>
           <small class="d-block d-sm-inline-block">
             <span class="text-muted">{{ 'messages.station.trainDetail.origin' | translate }} </span>
-            <a class="text-reset" [routerLink]="['/station']" [queryParams]="{ id: train.originIP, date: train.dateStart, types: types}"><b>{{train.origin}}</b></a>.
+            <a class="text-reset" [routerLink]="[path]" [queryParams]="{ id: train.originIP, date: train.dateStart, types: types}" [target]="target"><b>{{train.origin}}</b></a>.
           </small>
         </div>
         @if(!train.status || train.status && (train.status.type != TrainStatus.Cancelled && train.status.type != TrainStatus.Done)){
@@ -55,8 +55,8 @@
         <div class="col">
           <span class="small my-1 me-2">
             <span class="d-inline-block  bg-{{train.class}} bg-opacity-10 py-0 me-1 rounded">
-              <span class="bg-{{train.class}} bg-opacity-75 text-white py-0 px-1 rounded"><a class="text-decoration-none text-reset" [routerLink]="['/train']" [queryParams]="{ number: train.number1, date: train.dateStart}">{{train.type}}</a></span>
-              <span class="px-1"><a class="text-reset" [routerLink]="['/train']" [queryParams]="{ number: train.number1, date: train.dateStart}">{{ train.number1}}</a><small class="text-muted">@if(train.number2){/{{train.number2}}}</small></span>
+              <span class="bg-{{train.class}} bg-opacity-75 text-white py-0 px-1 rounded"><a class="text-decoration-none text-reset" [routerLink]="['/train']" [queryParams]="{ number: train.number1, date: train.dateStart}" [target]="target">{{train.type}}</a></span>
+              <span class="px-1"><a class="text-reset" [routerLink]="['/train']" [queryParams]="{ number: train.number1, date: train.dateStart}" [target]="target">{{ train.number1}}</a><small class="text-muted">@if(train.number2){/{{train.number2}}}</small></span>
             </span>
             <small class="d-inline-block">{{ train.company }}</small>
           </span>
@@ -78,7 +78,7 @@
           <small>{{'messages.common.loading' | translate}}</small>
         </div>
       } @else {
-          <hbb-train-stop-list [small]="true" [stopList]="trainDetail" [trainClass]="train.class"  [startDate]="train.dateStart" [nextDate]="nextDate" [types]="types" [currentStationId]="currentStationId"></hbb-train-stop-list>
+          <hbb-train-stop-list [small]="true" [stopList]="trainDetail" [trainClass]="train.class"  [startDate]="train.dateStart" [nextDate]="nextDate" [types]="types" [currentStationId]="currentStationId" [compact]="compact"></hbb-train-stop-list>
         }
       </div>
     }

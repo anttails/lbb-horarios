@@ -18,7 +18,7 @@ export const routes: Routes = [
       {
         path: '', component: IframeViewComponent,
         children: [
-          { path: 'compact', component: StationViewComponent }
+          { path: 'compact', component: StationViewComponent, data: {compact: true} }
         ]
       }
     ]

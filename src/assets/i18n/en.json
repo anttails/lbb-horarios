@@ -108,6 +108,6 @@
       }
     },
 
-    "footer": "Site developed by <b><a href=\"https://anteropires.com\" target=\"_blank\">Antero Pires</a></b>.<br>Data obtained via the search tool of <b><a href=\"https://servicos.infraestruturasdeportugal.pt/pt-pt/horarios\" target=\"_blank\">Infraestruturas de Portugal</a></b>. The displayed information may not reflect real time running conditions.<br><b><a href=\"https://linhadabeirabaixa.com\" target=\"_blank\">linhadabeirabaixa.com</a></b>"
-
+    "footer":         "Site developed by <b><a href=\"https://anteropires.com\" target=\"_blank\">Antero Pires</a></b>.<br>Data obtained via the search tool of <b><a href=\"https://servicos.infraestruturasdeportugal.pt/pt-pt/horarios\" target=\"_blank\">Infraestruturas de Portugal</a></b>. The displayed information may not reflect real time running conditions.<br><b><a href=\"https://linhadabeirabaixa.com\" target=\"_blank\">linhadabeirabaixa.com</a></b>",
+    "footerCompact":  "Data obtained via the search tool of <b><a href=\"https://servicos.infraestruturasdeportugal.pt/pt-pt/horarios\" target=\"_blank\">Infraestruturas de Portugal</a></b>. <span class=\"d-md-block\">The displayed information may not reflect real time running conditions.</span>"
 }

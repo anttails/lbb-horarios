@@ -1,6 +1,6 @@
 @if(station && !loading){
 <div id="header" class="sticky-md-top bg-body-tertiary mt-3 mt-md-0">
-  <div class="row align-items-center pt-1 pt-md-2 mb-2 mb-md-3">
+  <div class="row align-items-center pt-1 pt-md-2 mb-2 mb-md-3" *ngIf="!compact">
     <div class="col-12 col-md-auto text-center h3 mt-1 mb-0 fw-semibold">
       <span class="d-inline-block bg-body p-1 px-2 rounded">
         {{station.stationName}}
@@ -11,7 +11,7 @@
       </span>
     </div>
   </div>
-  <div class="row small text-muted pb-2 mb-2 border-bottom border-muted">
+  <div class="row small text-muted pb-2 mb-2 border-bottom border-muted" [ngClass]="{'m-2': compact}">
     <div class="col-12 col-md-auto text-center">
       @if(station.trainList.length){
         <small [innerHTML]="'messages.station.results' | translate: {number: station.trainList.length, s: (station.trainList.length != 1 ? 's': '')}">
@@ -25,6 +25,10 @@
     <div class="col-12 col-md-auto ms-auto text-center small">
       <small [innerHTML]="'messages.station.updated' | translate: {datetime: station.updatedDateTime}">
       </small>
+      <span class="link-primary ms-2" role="button" *ngIf="compact" (click)="refreshData()">
+        <fa-icon [icon]="refreshIcon" [fixedWidth]="true"></fa-icon>
+        <span class="visually-hidden">{{ 'messages.form.refreshStatus' | translate }}</span>
+      </span>
     </div>
   </div>
 </div>
@@ -39,7 +43,7 @@
 }
 
 @for (train of station.trainList; track train.dateStart + '_' + train.number1 + '_' + station.updatedDateTime) {
-<hbb-station-train-info [showPassed]="showPassed" [train]="train" [types]="types" [currentStationId]="station.stationIP"></hbb-station-train-info>
+<hbb-station-train-info [showPassed]="showPassed" [train]="train" [types]="types" [currentStationId]="station.stationIP" [compact]="compact"></hbb-station-train-info>
 } @empty {
   <hbb-info messageCode="noTrains"></hbb-info>
 }

@@ -19,7 +19,7 @@
       </div>
       <div class="col ps-3 py-2">
         <span class="d-block" [ngClass]="{'fs-5': !small, 'fs-6': small}">
-          <a class="text-reset" [routerLink]="['/station']" [queryParams]="{ id: stop.stationId, date: stop.nextDay ? nextDate : startDate, types: types}">{{stop.stationName}}</a>
+          <a class="text-reset" [routerLink]="['/station']" [queryParams]="{ id: stop.stationId, date: stop.nextDay ? nextDate : startDate, types: types}" [target]="target" >{{stop.stationName}}</a>
         </span>
         @if (stop.remarks) {
           <small class="d-block text-muted">
