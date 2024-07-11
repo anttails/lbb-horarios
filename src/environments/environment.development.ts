@@ -1,5 +1,5 @@
 export const environment = {
-  cdnURL: 'https://cdn.linhadabeirabaixa.com',
+  cdnURL: 'http://localhost:3000',
   trackerUrl: '',
   siteId: ''
 };
